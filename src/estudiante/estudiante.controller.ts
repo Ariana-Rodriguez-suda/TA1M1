@@ -1,0 +1,41 @@
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe, NotFoundException } from '@nestjs/common';
+import { EstudianteService } from './estudiante.service';
+import { CreateEstudianteDto } from './dto/create-estudiante.dto';
+import { UpdateEstudianteDto } from './dto/update-estudiante.dto';
+
+@Controller('estudiante')
+export class EstudianteController {
+  constructor(private readonly estudianteService: EstudianteService) {}
+
+  @Post()
+  create(@Body() createEstudianteDto: CreateEstudianteDto) {
+    return this.estudianteService.create(createEstudianteDto)
+  }
+
+  @Get()
+  async findAll(
+    @Query('page', ParseIntPipe) page = 1,
+    @Query('limit', ParseIntPipe) limit = 10,
+  ) {
+    const skip = (page - 1) * limit
+    const data = await this.estudianteService.findAll(skip, limit)
+    return { page, limit, data }
+  }
+
+  @Get(':id')
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const estudiante = await this.estudianteService.findOne(id)
+    if (!estudiante) throw new NotFoundException(`Estudiante con id ${id} no encontrado`)
+    return estudiante
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateEstudianteDto: UpdateEstudianteDto) {
+    return this.estudianteService.update(+id, updateEstudianteDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.estudianteService.remove(+id);
+  }
+}
