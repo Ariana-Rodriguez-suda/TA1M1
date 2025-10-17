@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Put, Body, Patch, Param, Delete, Query, ParseIntPipe, NotFoundException } from '@nestjs/common';
 import { AulaService } from './aula.service';
 import { CreateAulaDto } from './dto/create-aula.dto';
 import { UpdateAulaDto } from './dto/update-aula.dto';
@@ -30,8 +30,13 @@ export class AulaController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAulaDto: UpdateAulaDto) {
-    return this.aulaService.update(+id, updateAulaDto);
+  partialUpdate(@Param('id') id: string, @Body() dto: UpdateAulaDto) {
+    return this.aulaService.update(+id, dto);
+  }
+
+  @Put(':id')
+  fullUpdate(@Param('id') id: string, @Body() dto: UpdateAulaDto) {
+    return this.aulaService.update(+id, dto);
   }
 
   @Delete(':id')

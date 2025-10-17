@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Put, Delete, Query, ParseIntPipe, NotFoundException } from '@nestjs/common';
 import { TituloService } from './titulo.service';
 import { CreateTituloDto } from './dto/create-titulo.dto';
 import { UpdateTituloDto } from './dto/update-titulo.dto';
@@ -30,8 +30,13 @@ export class TituloController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTituloDto: UpdateTituloDto) {
-    return this.tituloService.update(+id, updateTituloDto);
+  partialUpdate(@Param('id') id: string, @Body() dto: UpdateTituloDto) {
+    return this.tituloService.update(+id, dto);
+  }
+
+  @Put(':id')
+  fullUpdate(@Param('id') id: string, @Body() dto: UpdateTituloDto) {
+    return this.tituloService.update(+id, dto);
   }
 
   @Delete(':id')

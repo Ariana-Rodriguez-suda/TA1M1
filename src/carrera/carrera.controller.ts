@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Put, Param, Delete, Query, ParseIntPipe, NotFoundException } from '@nestjs/common';
 import { CarreraService } from './carrera.service';
 import { CreateCarreraDto } from './dto/create-carrera.dto';
 import { UpdateCarreraDto } from './dto/update-carrera.dto';
@@ -30,8 +30,13 @@ export class CarreraController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCarreraDto: UpdateCarreraDto) {
-    return this.carreraService.update(+id, updateCarreraDto);
+  partialUpdate(@Param('id') id: string, @Body() dto: UpdateCarreraDto) {
+    return this.carreraService.update(+id, dto);
+  }
+
+  @Put(':id')
+  fullUpdate(@Param('id') id: string, @Body() dto: UpdateCarreraDto) {
+    return this.carreraService.update(+id, dto);
   }
 
   @Delete(':id')

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Put, Param, Delete, Query, ParseIntPipe, NotFoundException } from '@nestjs/common';
 import { ProfesorService } from './profesor.service';
 import { CreateProfesorDto } from './dto/create-profesor.dto';
 import { UpdateProfesorDto } from './dto/update-profesor.dto';
@@ -30,8 +30,13 @@ export class ProfesorController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProfesorDto: UpdateProfesorDto) {
-    return this.profesorService.update(+id, updateProfesorDto);
+  partialUpdate(@Param('id') id: string, @Body() dto: UpdateProfesorDto) {
+    return this.profesorService.update(+id, dto);
+  }
+
+  @Put(':id')
+  fullUpdate(@Param('id') id: string, @Body() dto: UpdateProfesorDto) {
+    return this.profesorService.update(+id, dto);
   }
 
   @Delete(':id')

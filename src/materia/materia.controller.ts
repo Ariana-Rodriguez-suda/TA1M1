@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Put, Param, Delete, Query, ParseIntPipe, NotFoundException } from '@nestjs/common';
 import { MateriaService } from './materia.service';
 import { CreateMateriaDto } from './dto/create-materia.dto';
 import { UpdateMateriaDto } from './dto/update-materia.dto';
@@ -30,9 +30,15 @@ export class MateriaController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMateriaDto: UpdateMateriaDto) {
-    return this.materiaService.update(+id, updateMateriaDto);
+  partialUpdate(@Param('id') id: string, @Body() dto: UpdateMateriaDto) {
+    return this.materiaService.update(+id, dto);
   }
+
+  @Put(':id')
+  fullUpdate(@Param('id') id: string, @Body() dto: UpdateMateriaDto) {
+    return this.materiaService.update(+id, dto);
+  }
+
 
   @Delete(':id')
   remove(@Param('id') id: string) {

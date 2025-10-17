@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Put, Delete, Query, ParseIntPipe, NotFoundException } from '@nestjs/common';
 import { InscripcionService } from './inscripcion.service';
 import { CreateInscripcionDto } from './dto/create-inscripcion.dto';
 import { UpdateInscripcionDto } from './dto/update-inscripcion.dto';
@@ -30,8 +30,13 @@ export class InscripcionController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateInscripcionDto: UpdateInscripcionDto) {
-    return this.inscripcionService.update(+id, updateInscripcionDto);
+  partialUpdate(@Param('id') id: string, @Body() dto: UpdateInscripcionDto) {
+    return this.inscripcionService.update(+id, dto);
+  }
+
+  @Put(':id')
+  fullUpdate(@Param('id') id: string, @Body() dto: UpdateInscripcionDto) {
+    return this.inscripcionService.update(+id, dto);
   }
 
   @Delete(':id')
