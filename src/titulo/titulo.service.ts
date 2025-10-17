@@ -28,14 +28,17 @@ create(createTituloDto: CreateTituloDto) {
 }
 
 update(id: number, updateTituloDto: UpdateTituloDto) {
-  const { id_profesor, ...rest } = updateTituloDto
+  if (!updateTituloDto) throw new Error("Cuerpo vacío");
+
+  const { id_profesor, ...rest } = updateTituloDto;
+
   return this.prisma.titulo.update({
     where: { id_titulo: id },
     data: {
       ...rest,
-      ...(id_profesor && { profesor: { connect: { id_profesor } } }),
+      ...(id_profesor ? { profesor: { connect: { id_profesor } } } : {}),
     },
-  })
+  });
 }
 
   remove(id: number) {
