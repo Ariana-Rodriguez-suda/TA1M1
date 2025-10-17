@@ -17,16 +17,16 @@ export class InscripcionService {
     })
   }
 
-  create(createInscripcionDto: CreateInscripcionDto) {
-    const { id_estudiante, id_materia, ...rest } = createInscripcionDto
-    return this.prisma.inscripcion.create({
-      data: {
-        ...rest,
-        estudiante: { connect: { id_estudiante } },
-        materia: { connect: { id_materia } },
-      },
-    })
-  }
+create(createInscripcionDto: CreateInscripcionDto) {
+  const { id_estudiante, id_materia, fecha_inscripcion } = createInscripcionDto
+  return this.prisma.inscripcion.create({
+    data: {
+      fecha_inscripcion: new Date(fecha_inscripcion),
+      estudiante: { connect: { id_estudiante } },
+      materia: { connect: { id_materia } }
+    }
+  })
+}
 
   update(id: number, updateInscripcionDto: UpdateInscripcionDto) {
     const { id_estudiante, id_materia, ...rest } = updateInscripcionDto
