@@ -9,9 +9,13 @@ import { CarreraModule } from './carrera/carrera.module';
 import { AulaModule } from './aula/aula.module';
 import { InscripcionModule } from './inscripcion/inscripcion.module';
 import { TituloModule } from './titulo/titulo.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [PrismaModule, EstudianteModule, ProfesorModule, MateriaModule, CarreraModule, AulaModule, InscripcionModule, TituloModule],
+  imports: [    ConfigModule.forRoot({
+      isGlobal: true, // permite usar .env en cualquier módulo
+    }),
+    PrismaModule, EstudianteModule, ProfesorModule, MateriaModule, CarreraModule, AulaModule, InscripcionModule, TituloModule],
   controllers: [AppController],
   providers: [AppService],
 })
