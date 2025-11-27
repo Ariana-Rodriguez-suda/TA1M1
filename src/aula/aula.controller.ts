@@ -2,8 +2,11 @@ import { Controller, Get, Post, Put, Body, Patch, Param, Delete, Query, ParseInt
 import { AulaService } from './aula.service';
 import { CreateAulaDto } from './dto/create-aula.dto';
 import { UpdateAulaDto } from './dto/update-aula.dto';
+import { JwtAuthGuard } from 'src/Auth/guards/jwt-auth.guard';
+import { UseGuards } from '@nestjs/common';
 
 @Controller('aula')
+@UseGuards(JwtAuthGuard)
 export class AulaController {
   constructor(private readonly aulaService: AulaService) {}
 

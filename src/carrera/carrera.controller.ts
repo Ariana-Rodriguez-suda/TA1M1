@@ -2,8 +2,11 @@ import { Controller, Get, Post, Body, Patch, Put, Param, Delete, Query, ParseInt
 import { CarreraService } from './carrera.service';
 import { CreateCarreraDto } from './dto/create-carrera.dto';
 import { UpdateCarreraDto } from './dto/update-carrera.dto';
+import { JwtAuthGuard } from 'src/Auth/guards/jwt-auth.guard';
+import { UseGuards } from '@nestjs/common';
 
 @Controller('carrera')
+@UseGuards(JwtAuthGuard)
 export class CarreraController {
   constructor(private readonly carreraService: CarreraService) {}
 

@@ -2,8 +2,11 @@ import { Controller, Get, Post, Body, Patch, Put, Param, Delete, Query, ParseInt
 import { ProfesorService } from './profesor.service';
 import { CreateProfesorDto } from './dto/create-profesor.dto';
 import { UpdateProfesorDto } from './dto/update-profesor.dto';
+import { JwtAuthGuard } from 'src/Auth/guards/jwt-auth.guard';
+import { UseGuards } from '@nestjs/common';
 
 @Controller('profesor')
+@UseGuards(JwtAuthGuard)
 export class ProfesorController {
   constructor(private readonly profesorService: ProfesorService) {}
 
