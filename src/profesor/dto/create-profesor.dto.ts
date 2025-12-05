@@ -1,17 +1,7 @@
-import { IsString, IsEmail, IsOptional } from 'class-validator';
+import { IsInt, IsOptional } from 'class-validator';
 
 export class CreateProfesorDto {
-  @IsString()
-  nombre: string
-
-  @IsString()
-  apellido: string
-
-    @IsEmail()
-  correo: string
-
   @IsOptional()
-  @IsString()
-  telefono?: string
-
-};
+  @IsInt()
+  userId?: number;   // porque en el schema es opcional
+}

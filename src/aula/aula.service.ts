@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common'
-import { PrismaService } from '../prisma/prisma.service'
+import { PrismaCarrerasService } from '../prisma/carreras-prisma.service'
 import { CreateAulaDto } from './dto/create-aula.dto'
 import { UpdateAulaDto } from './dto/update-aula.dto'
 
 @Injectable()
 export class AulaService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaCarrerasService) {}
 
   findAll(skip = 0, take = 10) {
     return this.prisma.aula.findMany({ skip, take })

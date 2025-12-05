@@ -9,9 +9,9 @@ export class AuthController {
 
   @Post('login')
   async login(@Body() body) {
-    const { email, password } = body;
+    const { correo, password } = body;
 
-    const user = await this.authService.validateUser(email, password);
+    const user = await this.authService.validateUser(correo, password);
 
     if (!user) throw new UnauthorizedException('Credenciales incorrectas');
 

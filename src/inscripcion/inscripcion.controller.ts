@@ -1,9 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Put, Delete, Query, ParseIntPipe, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Put, Delete, Query, ParseIntPipe, NotFoundException, UseGuards } from '@nestjs/common';
 import { InscripcionService } from './inscripcion.service';
 import { CreateInscripcionDto } from './dto/create-inscripcion.dto';
 import { UpdateInscripcionDto } from './dto/update-inscripcion.dto';
 import { JwtAuthGuard } from 'src/Auth/guards/jwt-auth.guard';
-import { UseGuards } from '@nestjs/common';
 
 @Controller('inscripcion')
 @UseGuards(JwtAuthGuard)
@@ -12,7 +11,7 @@ export class InscripcionController {
 
   @Post()
   create(@Body() createInscripcionDto: CreateInscripcionDto) {
-    return this.inscripcionService.create(createInscripcionDto)
+    return this.inscripcionService.create(createInscripcionDto);
   }
 
   @Get()
@@ -20,30 +19,30 @@ export class InscripcionController {
     @Query('page', ParseIntPipe) page = 1,
     @Query('limit', ParseIntPipe) limit = 10,
   ) {
-    const skip = (page - 1) * limit
-    const data = await this.inscripcionService.findAll(skip, limit)
-    return { page, limit, data }
+    const skip = (page - 1) * limit;
+    const data = await this.inscripcionService.findAll(skip, limit);
+    return { page, limit, data };
   }
 
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
-    const inscripcion = await this.inscripcionService.findOne(id)
-    if (!inscripcion) throw new NotFoundException(`Inscripcion con id ${id} no encontrado`)
-    return inscripcion
+    const inscripcion = await this.inscripcionService.findOne(id);
+    if (!inscripcion) throw new NotFoundException(`Inscripcion con id ${id} no encontrada`);
+    return inscripcion;
   }
 
   @Patch(':id')
-  partialUpdate(@Param('id') id: string, @Body() dto: UpdateInscripcionDto) {
-    return this.inscripcionService.update(+id, dto);
+  partialUpdate(@Param('id') id: number, @Body() dto: UpdateInscripcionDto) {
+    return this.inscripcionService.update(id, dto);
   }
 
   @Put(':id')
-  fullUpdate(@Param('id') id: string, @Body() dto: UpdateInscripcionDto) {
-    return this.inscripcionService.update(+id, dto);
+  fullUpdate(@Param('id') id: number, @Body() dto: UpdateInscripcionDto) {
+    return this.inscripcionService.update(id, dto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.inscripcionService.remove(+id);
+  remove(@Param('id') id: number) {
+    return this.inscripcionService.remove(id);
   }
 }

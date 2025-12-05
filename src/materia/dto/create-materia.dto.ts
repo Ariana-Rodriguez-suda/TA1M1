@@ -1,12 +1,20 @@
-import { IsString, IsInt } from 'class-validator'
+import { IsString, IsInt, IsOptional } from 'class-validator';
 
 export class CreateMateriaDto {
   @IsString()
-  nombre_materia: string
+  nombre_materia: string;
 
   @IsInt()
-  id_carrera: number
+  id_carrera: number;
 
   @IsInt()
-  id_aula: number
+  id_aula: number;
+
+  @IsOptional()
+  @IsInt()
+  periodoId?: number;
+
+  @IsOptional()
+  @IsInt()
+  id_inscripcion?: number;
 }

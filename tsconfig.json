@@ -14,6 +14,11 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
+    "paths": {
+      "@prisma-usuarios": ["prisma/generated/usuarios"],
+      "@prisma-carreras": ["prisma/generated/carreras"],
+      "@prisma-profesor": ["prisma/generated/profesor"]
+    },
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,

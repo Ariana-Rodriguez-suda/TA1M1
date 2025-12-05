@@ -1,4 +1,14 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
+  "compilerOptions": {
+    "outDir": "./dist",
+    "removeComments": true,
+    "baseUrl": "./",
+    "paths": {
+      "@prisma-usuarios": ["prisma/generated/usuarios"],
+      "@prisma-carreras": ["prisma/generated/carreras"],
+      "@prisma-profesor": ["prisma/generated/profesor"]
+    }
+  },
+  "include": ["src/**/*"]
 }

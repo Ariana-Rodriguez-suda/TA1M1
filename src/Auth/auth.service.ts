@@ -1,22 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { PrismaUsuariosService } from '../prisma/usuarios-prisma.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private jwtService: JwtService) {}
+  constructor(
+    private jwtService: JwtService,
+    private prismaUsuarios: PrismaUsuariosService,
+  ) {}
 
-  async validateUser(email: string, password: string) {
-    // Aquí debes validar contra tu BD
-    // Ejemplo temporal:
-    if (email === 'test@correo.com' && password === '123456') {
-      return { id: 1, email };
-    }
+  async validateUser(correo: string, password: string) {
+    // Buscar usuario real en la BD
+    const user = await this.prismaUsuarios.usuario.findUnique({
+      where: { correo },
+    });
 
-    return null;
+    if (!user) return null;
+
+    // Validación simple, luego añadimos hash
+    if (user.clave !== password) return null;
+
+    return user;
   }
 
   async login(user: any) {
-    const payload = { sub: user.id, email: user.email };
+    const payload = {
+      sub: user.id_usuario,
+      correo: user.correo,
+      rol: user.rolId,
+    };
 
     return {
       access_token: this.jwtService.sign(payload),

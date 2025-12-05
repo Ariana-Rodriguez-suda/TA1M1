@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common'
-import { PrismaService } from '../prisma/prisma.service'
+import { PrismaProfesorService } from '../prisma/profesor-prisma.service'
 import { CreateProfesorDto } from './dto/create-profesor.dto'
 import { UpdateProfesorDto } from './dto/update-profesor.dto'
 
 @Injectable()
 export class ProfesorService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaProfesorService) {}
 
   findAll(skip = 0, take = 10) {
     return this.prisma.profesor.findMany({ skip, take })
@@ -17,16 +17,18 @@ export class ProfesorService {
     })
   }
 
-  create(createProfesorDto: CreateProfesorDto) {
+  create(dto: CreateProfesorDto) {
     return this.prisma.profesor.create({
-      data: createProfesorDto,
+      data: {
+        userId: dto.userId ?? null,
+      }
     })
   }
 
-  update(id: number, updateProfesorDto: UpdateProfesorDto) {
+  update(id: number, dto: UpdateProfesorDto) {
     return this.prisma.profesor.update({
       where: { id_profesor: id },
-      data: updateProfesorDto,
+      data: dto,
     })
   }
 
